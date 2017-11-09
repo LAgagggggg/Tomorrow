@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  TmrView.h
 //  Tomorrow
 //
 //  Created by 李嘉银 on 2017/11/9.
@@ -7,13 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AppDelegate.h"
 #import "TmrThing.h"
-#import "TmrView.h"
 
-@interface ViewController : UIViewController
+@interface TmrView : UIView
 
-@property(strong,nonatomic)AppDelegate *appDelegate;
 
+-(TmrView *)initViewWithThing:(TmrThing *)thing;
 @end
-

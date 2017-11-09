@@ -13,6 +13,11 @@
 		081CCBEE1FB456C800119F06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 081CCBED1FB456C800119F06 /* Assets.xcassets */; };
 		081CCBF11FB456C800119F06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 081CCBEF1FB456C800119F06 /* LaunchScreen.storyboard */; };
 		081CCBF41FB456C800119F06 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 081CCBF31FB456C800119F06 /* main.m */; };
+		081CCBFC1FB4575700119F06 /* TmrThing.m in Sources */ = {isa = PBXBuildFile; fileRef = 081CCBFB1FB4575700119F06 /* TmrThing.m */; };
+		081CCBFF1FB457B500119F06 /* TmrView.m in Sources */ = {isa = PBXBuildFile; fileRef = 081CCBFE1FB457B500119F06 /* TmrView.m */; };
+		081CCC0B1FB473C100119F06 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 081CCC081FB473C000119F06 /* refresh.png */; };
+		081CCC0C1FB473C100119F06 /* editor.png in Resources */ = {isa = PBXBuildFile; fileRef = 081CCC091FB473C000119F06 /* editor.png */; };
+		081CCC0D1FB473C100119F06 /* addition.png in Resources */ = {isa = PBXBuildFile; fileRef = 081CCC0A1FB473C000119F06 /* addition.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +31,13 @@
 		081CCBF01FB456C800119F06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		081CCBF21FB456C800119F06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		081CCBF31FB456C800119F06 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		081CCBFA1FB4575700119F06 /* TmrThing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TmrThing.h; sourceTree = "<group>"; };
+		081CCBFB1FB4575700119F06 /* TmrThing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TmrThing.m; sourceTree = "<group>"; };
+		081CCBFD1FB457B500119F06 /* TmrView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TmrView.h; sourceTree = "<group>"; };
+		081CCBFE1FB457B500119F06 /* TmrView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TmrView.m; sourceTree = "<group>"; };
+		081CCC081FB473C000119F06 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
+		081CCC091FB473C000119F06 /* editor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editor.png; sourceTree = "<group>"; };
+		081CCC0A1FB473C000119F06 /* addition.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addition.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,15 +70,22 @@
 		081CCBE31FB456C800119F06 /* Tomorrow */ = {
 			isa = PBXGroup;
 			children = (
+				081CCBEA1FB456C800119F06 /* Main.storyboard */,
 				081CCBE41FB456C800119F06 /* AppDelegate.h */,
 				081CCBE51FB456C800119F06 /* AppDelegate.m */,
 				081CCBE71FB456C800119F06 /* ViewController.h */,
 				081CCBE81FB456C800119F06 /* ViewController.m */,
-				081CCBEA1FB456C800119F06 /* Main.storyboard */,
+				081CCBFA1FB4575700119F06 /* TmrThing.h */,
+				081CCBFB1FB4575700119F06 /* TmrThing.m */,
+				081CCBFD1FB457B500119F06 /* TmrView.h */,
+				081CCBFE1FB457B500119F06 /* TmrView.m */,
 				081CCBED1FB456C800119F06 /* Assets.xcassets */,
 				081CCBEF1FB456C800119F06 /* LaunchScreen.storyboard */,
 				081CCBF21FB456C800119F06 /* Info.plist */,
 				081CCBF31FB456C800119F06 /* main.m */,
+				081CCC0A1FB473C000119F06 /* addition.png */,
+				081CCC091FB473C000119F06 /* editor.png */,
+				081CCC081FB473C000119F06 /* refresh.png */,
 			);
 			path = Tomorrow;
 			sourceTree = "<group>";
@@ -130,8 +149,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				081CCBF11FB456C800119F06 /* LaunchScreen.storyboard in Resources */,
+				081CCC0D1FB473C100119F06 /* addition.png in Resources */,
+				081CCC0C1FB473C100119F06 /* editor.png in Resources */,
 				081CCBEE1FB456C800119F06 /* Assets.xcassets in Resources */,
 				081CCBEC1FB456C800119F06 /* Main.storyboard in Resources */,
+				081CCC0B1FB473C100119F06 /* refresh.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,7 +165,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				081CCBE91FB456C800119F06 /* ViewController.m in Sources */,
+				081CCBFF1FB457B500119F06 /* TmrView.m in Sources */,
 				081CCBF41FB456C800119F06 /* main.m in Sources */,
+				081CCBFC1FB4575700119F06 /* TmrThing.m in Sources */,
 				081CCBE61FB456C800119F06 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
