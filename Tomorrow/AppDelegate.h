@@ -11,7 +11,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong,nonatomic)void(^appTerminated)(void);
+@property (strong,nonatomic)void(^dataSaverBlock)(void);
 
 @end
 

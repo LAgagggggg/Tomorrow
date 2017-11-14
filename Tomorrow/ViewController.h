@@ -10,8 +10,10 @@
 #import "AppDelegate.h"
 #import "TmrThing.h"
 #import "TmrView.h"
+#import "MenuView.h"
+#import "TomorrowListViewController.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<UITextViewDelegate,UIGestureRecognizerDelegate>
 
 @property(strong,nonatomic)AppDelegate *appDelegate;
 

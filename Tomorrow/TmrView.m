@@ -24,12 +24,14 @@
     self.layer.shadowOpacity=0.5;
     maskLayer.shadowRadius=4.f;
     self.layer.shadowOffset = CGSizeMake(4,4);
-    UILabel * title =[[UILabel alloc]initWithFrame:CGRectMake(self.bounds.size.width/8, self.bounds.size.height*3/8, self.bounds.size.width*3/4, 50)];
-    title.text=thing.title;
-    [title setTextColor:[UIColor blackColor]];
-    [title setTextAlignment:NSTextAlignmentCenter];
-    [title setFont:[UIFont systemFontOfSize:30 weight:UIFontWeightHeavy]];
-    [self addSubview:title];
+    self.title =[[UITextView alloc]initWithFrame:CGRectMake(self.bounds.size.width/8, self.bounds.size.height*2/8, self.bounds.size.width*3/4, 200)];
+    self.title.text=thing.title;
+    [self.title setTextColor:[UIColor blackColor]];
+    [self.title setTextAlignment:NSTextAlignmentCenter];
+    [self.title setFont:[UIFont systemFontOfSize:30 weight:UIFontWeightHeavy]];
+    self.title.backgroundColor=[UIColor clearColor];
+    self.title.scrollEnabled=NO;
+    [self addSubview:self.title];
     return self;
 }
 

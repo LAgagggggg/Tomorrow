@@ -18,9 +18,17 @@
 		081CCC0B1FB473C100119F06 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 081CCC081FB473C000119F06 /* refresh.png */; };
 		081CCC0C1FB473C100119F06 /* editor.png in Resources */ = {isa = PBXBuildFile; fileRef = 081CCC091FB473C000119F06 /* editor.png */; };
 		081CCC0D1FB473C100119F06 /* addition.png in Resources */ = {isa = PBXBuildFile; fileRef = 081CCC0A1FB473C000119F06 /* addition.png */; };
+		0837E1911FB57C7A005BCC02 /* TomorrowListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0837E1901FB57C7A005BCC02 /* TomorrowListViewController.m */; };
+		088B3EA91FB6F37D00330FE0 /* praise.png in Resources */ = {isa = PBXBuildFile; fileRef = 088B3EA81FB6F37D00330FE0 /* praise.png */; };
+		088B3EAC1FB6F45A00330FE0 /* MenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B3EAB1FB6F45900330FE0 /* MenuView.m */; };
+		088B3EB41FB6FA1600330FE0 /* return.png in Resources */ = {isa = PBXBuildFile; fileRef = 088B3EB11FB6FA1600330FE0 /* return.png */; };
+		088B3EB51FB6FA1600330FE0 /* setup.png in Resources */ = {isa = PBXBuildFile; fileRef = 088B3EB21FB6FA1600330FE0 /* setup.png */; };
+		088B3EB61FB6FA1600330FE0 /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 088B3EB31FB6FA1600330FE0 /* right.png */; };
+		088B3ECF1FB841EE00330FE0 /* TmrCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B3ECE1FB841EE00330FE0 /* TmrCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		035C9C5E8D7BE58E0292F0E7 /* Pods-Tomorrow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tomorrow.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tomorrow/Pods-Tomorrow.release.xcconfig"; sourceTree = "<group>"; };
 		081CCBE11FB456C800119F06 /* Tomorrow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tomorrow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		081CCBE41FB456C800119F06 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		081CCBE51FB456C800119F06 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -38,6 +46,18 @@
 		081CCC081FB473C000119F06 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
 		081CCC091FB473C000119F06 /* editor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editor.png; sourceTree = "<group>"; };
 		081CCC0A1FB473C000119F06 /* addition.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addition.png; sourceTree = "<group>"; };
+		0837E18F1FB57C7A005BCC02 /* TomorrowListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TomorrowListViewController.h; sourceTree = "<group>"; };
+		0837E1901FB57C7A005BCC02 /* TomorrowListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TomorrowListViewController.m; sourceTree = "<group>"; };
+		088B3EA81FB6F37D00330FE0 /* praise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = praise.png; sourceTree = "<group>"; };
+		088B3EAA1FB6F45900330FE0 /* MenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuView.h; sourceTree = "<group>"; };
+		088B3EAB1FB6F45900330FE0 /* MenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuView.m; sourceTree = "<group>"; };
+		088B3EB11FB6FA1600330FE0 /* return.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = return.png; sourceTree = "<group>"; };
+		088B3EB21FB6FA1600330FE0 /* setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setup.png; sourceTree = "<group>"; };
+		088B3EB31FB6FA1600330FE0 /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
+		088B3ECD1FB841EE00330FE0 /* TmrCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TmrCell.h; sourceTree = "<group>"; };
+		088B3ECE1FB841EE00330FE0 /* TmrCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TmrCell.m; sourceTree = "<group>"; };
+		70C2647B49EE4CB7A3C5F515 /* libPods-Tomorrow.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tomorrow.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81C6E35E9141103E7153C582 /* Pods-Tomorrow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tomorrow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tomorrow/Pods-Tomorrow.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +76,8 @@
 			children = (
 				081CCBE31FB456C800119F06 /* Tomorrow */,
 				081CCBE21FB456C800119F06 /* Products */,
+				8F800946BBAD48738AC6DE24 /* Pods */,
+				DAFAA5EB67C67159D4481174 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,19 +97,46 @@
 				081CCBE51FB456C800119F06 /* AppDelegate.m */,
 				081CCBE71FB456C800119F06 /* ViewController.h */,
 				081CCBE81FB456C800119F06 /* ViewController.m */,
+				0837E18F1FB57C7A005BCC02 /* TomorrowListViewController.h */,
+				0837E1901FB57C7A005BCC02 /* TomorrowListViewController.m */,
+				088B3EAA1FB6F45900330FE0 /* MenuView.h */,
+				088B3EAB1FB6F45900330FE0 /* MenuView.m */,
 				081CCBFA1FB4575700119F06 /* TmrThing.h */,
 				081CCBFB1FB4575700119F06 /* TmrThing.m */,
 				081CCBFD1FB457B500119F06 /* TmrView.h */,
 				081CCBFE1FB457B500119F06 /* TmrView.m */,
+				088B3ECD1FB841EE00330FE0 /* TmrCell.h */,
+				088B3ECE1FB841EE00330FE0 /* TmrCell.m */,
 				081CCBED1FB456C800119F06 /* Assets.xcassets */,
 				081CCBEF1FB456C800119F06 /* LaunchScreen.storyboard */,
 				081CCBF21FB456C800119F06 /* Info.plist */,
 				081CCBF31FB456C800119F06 /* main.m */,
+				088B3EA81FB6F37D00330FE0 /* praise.png */,
 				081CCC0A1FB473C000119F06 /* addition.png */,
 				081CCC091FB473C000119F06 /* editor.png */,
 				081CCC081FB473C000119F06 /* refresh.png */,
+				088B3EB11FB6FA1600330FE0 /* return.png */,
+				088B3EB31FB6FA1600330FE0 /* right.png */,
+				088B3EB21FB6FA1600330FE0 /* setup.png */,
 			);
 			path = Tomorrow;
+			sourceTree = "<group>";
+		};
+		8F800946BBAD48738AC6DE24 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				81C6E35E9141103E7153C582 /* Pods-Tomorrow.debug.xcconfig */,
+				035C9C5E8D7BE58E0292F0E7 /* Pods-Tomorrow.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		DAFAA5EB67C67159D4481174 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				70C2647B49EE4CB7A3C5F515 /* libPods-Tomorrow.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -97,9 +146,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 081CCBF71FB456C800119F06 /* Build configuration list for PBXNativeTarget "Tomorrow" */;
 			buildPhases = (
+				5FEB46CDF66105E862AC2711 /* [CP] Check Pods Manifest.lock */,
 				081CCBDD1FB456C800119F06 /* Sources */,
 				081CCBDE1FB456C800119F06 /* Frameworks */,
 				081CCBDF1FB456C800119F06 /* Resources */,
+				BC18E1133E9C1718A8173171 /* [CP] Embed Pods Frameworks */,
+				4BBBE2C7A4FF5FBB8EF070DC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -148,16 +200,74 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				088B3EB61FB6FA1600330FE0 /* right.png in Resources */,
 				081CCBF11FB456C800119F06 /* LaunchScreen.storyboard in Resources */,
+				088B3EB51FB6FA1600330FE0 /* setup.png in Resources */,
+				088B3EA91FB6F37D00330FE0 /* praise.png in Resources */,
 				081CCC0D1FB473C100119F06 /* addition.png in Resources */,
 				081CCC0C1FB473C100119F06 /* editor.png in Resources */,
 				081CCBEE1FB456C800119F06 /* Assets.xcassets in Resources */,
+				088B3EB41FB6FA1600330FE0 /* return.png in Resources */,
 				081CCBEC1FB456C800119F06 /* Main.storyboard in Resources */,
 				081CCC0B1FB473C100119F06 /* refresh.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4BBBE2C7A4FF5FBB8EF070DC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tomorrow/Pods-Tomorrow-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5FEB46CDF66105E862AC2711 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Tomorrow-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BC18E1133E9C1718A8173171 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Tomorrow/Pods-Tomorrow-frameworks.sh",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-11/iOS/RevealServer.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tomorrow/Pods-Tomorrow-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		081CCBDD1FB456C800119F06 /* Sources */ = {
@@ -167,8 +277,11 @@
 				081CCBE91FB456C800119F06 /* ViewController.m in Sources */,
 				081CCBFF1FB457B500119F06 /* TmrView.m in Sources */,
 				081CCBF41FB456C800119F06 /* main.m in Sources */,
+				0837E1911FB57C7A005BCC02 /* TomorrowListViewController.m in Sources */,
 				081CCBFC1FB4575700119F06 /* TmrThing.m in Sources */,
 				081CCBE61FB456C800119F06 /* AppDelegate.m in Sources */,
+				088B3EAC1FB6F45A00330FE0 /* MenuView.m in Sources */,
+				088B3ECF1FB841EE00330FE0 /* TmrCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +413,7 @@
 		};
 		081CCBF81FB456C800119F06 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81C6E35E9141103E7153C582 /* Pods-Tomorrow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -314,6 +428,7 @@
 		};
 		081CCBF91FB456C800119F06 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 035C9C5E8D7BE58E0292F0E7 /* Pods-Tomorrow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

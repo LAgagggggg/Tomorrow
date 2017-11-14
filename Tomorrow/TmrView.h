@@ -11,6 +11,7 @@
 
 @interface TmrView : UIView
 
+@property(strong,nonatomic)UITextView * title;
 
 -(TmrView *)initViewWithThing:(TmrThing *)thing;
 @end
