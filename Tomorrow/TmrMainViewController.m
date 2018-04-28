@@ -27,47 +27,50 @@
 
 float TmrAnimationDuration=0.3;
 float TmrMaxSwipeLength;
+
 -(NSMutableArray *)todayThingArr{//懒加载今日事项数组
+    NSString* documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    self.archiverPath=[documentPath stringByAppendingPathComponent:@"Tomorrow.data"];
     if (_todayThingArr==nil) {
-        NSString* documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        self.archiverPath=[documentPath stringByAppendingPathComponent:@"Tomorrow.data"];
+        
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if([fileManager fileExistsAtPath:self.archiverPath]){
             _todayThingArr=[NSKeyedUnarchiver unarchiveObjectWithFile:self.archiverPath];
         }
         else{//若第一次进入则创建示例
+            NSUserDefaults * deafults=[NSUserDefaults standardUserDefaults];
+            [deafults setObject:[NSDate date] forKey:@"ArrCreatedDate"];
             _todayThingArr=[[NSMutableArray alloc]init];
-            NSInteger i;
-            for (i=0; i<11; i++) {
-                TmrThing * thing=[[TmrThing alloc]initWithTitle:[NSString stringWithFormat:@"%lu",i]];
-                [_todayThingArr addObject:thing];
-            }
+            TmrThing * thing1=[[TmrThing alloc]initWithTitle:@"滑动完成任务"];
+            TmrThing * thing2=[[TmrThing alloc]initWithTitle:@"点击右下角添加任务"];
+            TmrThing * thing3=[[TmrThing alloc]initWithTitle:@"点击左下角刷新当前任务"];
+            TmrThing * thing4=[[TmrThing alloc]initWithTitle:@"专注于当前任务"];
+            [_todayThingArr addObjectsFromArray:@[thing1,thing2,thing3,thing4]];
         }
     }
     return  _todayThingArr;
 }
 
 -(NSMutableArray *)tomorrowThingArr{//明日事项数组
+    NSString* documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    self.archiverPathOfTomorrow=[documentPath stringByAppendingPathComponent:@"Tomorrow2.data"];
     if (_tomorrowThingArr==nil) {
-        NSString* documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        self.archiverPathOfTomorrow=[documentPath stringByAppendingPathComponent:@"Tomorrow2.data"];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if([fileManager fileExistsAtPath:self.archiverPathOfTomorrow]){
             _tomorrowThingArr=[NSKeyedUnarchiver unarchiveObjectWithFile:self.archiverPathOfTomorrow];
         }
         else{
             _tomorrowThingArr=[[NSMutableArray alloc]init];
-            NSInteger i;
-            for (i=0; i<4; i++) {
-                TmrThing * thing=[[TmrThing alloc]initWithTitle:[NSString stringWithFormat:@"%lu",i]];
-                [_tomorrowThingArr addObject:thing];
-            }
+            TmrThing * thing1=[[TmrThing alloc]initWithTitle:@"这里是为明天准备的任务"];
+            TmrThing * thing2=[[TmrThing alloc]initWithTitle:@"零点自动刷新"];
+            [_tomorrowThingArr addObjectsFromArray:@[thing1,thing2]];
         }
     }
     return  _tomorrowThingArr;
 }
 
 -(void)setViewWithArr{
+    [self checkDateToSwitchArr];
     TmrMaxSwipeLength=[UIScreen mainScreen].bounds.size.width/2;
     self.originY=self.cardView.center.y-64;
     dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TmrAnimationDuration* NSEC_PER_SEC));
@@ -109,6 +112,39 @@ float TmrMaxSwipeLength;
             }];
         }
     });
+}
+
+-(void)checkDateToSwitchArr{//每天将第二天的事项放入当天
+    NSDate * previousDate;
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    previousDate=[defaults valueForKey:@"ArrCreatedDate"];
+    if (previousDate) {
+        NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"yyyyMMddHHmmss"];
+        [formatter setTimeZone:[NSTimeZone localTimeZone]];
+        NSString *curDateStr=[formatter stringFromDate:[NSDate date]];
+        NSString *preDateStr=[formatter stringFromDate:previousDate];
+        int preDay=[preDateStr substringWithRange:NSMakeRange(6, 2)].intValue;
+        int curDay=[curDateStr substringWithRange:NSMakeRange(6, 2)].intValue;
+        NSLog(@"%d--%d",preDay,curDay);
+        if (preDay==curDay) {
+            //不做什么
+        }
+        else if (curDay==(preDay+1)||curDay==1){//到了新的一天
+            [self.todayThingArr removeAllObjects];
+            [self.todayThingArr addObjectsFromArray:self.tomorrowThingArr];
+            [self.tomorrowThingArr removeAllObjects];
+            [defaults setObject:[NSDate date] forKey:@"ArrCreatedDate"];
+        }
+        else{//可能超过一天没有打开应用
+            [self.todayThingArr removeAllObjects];
+            [self.tomorrowThingArr removeAllObjects];
+            [defaults setObject:[NSDate date] forKey:@"ArrCreatedDate"];
+        }
+    }
+    else{
+        [defaults setValue:[NSDate date] forKey:@"ArrCreatedDate"];
+    }
 }
 
 //-(void)pan:(UIPanGestureRecognizer *)pan{
@@ -161,7 +197,7 @@ float TmrMaxSwipeLength;
                     self.panReactView.layer.transform=CATransform3DTranslate(self.panReactView.layer.transform, -[UIScreen mainScreen].bounds.size.width, 0, 0);
                     self.panReactView.layer.transform=CATransform3DRotate(self.panReactView.layer.transform, M_PI/6, 0, 0, -1);
                 }
-                self.panReactView.alpha=0.5;
+                self.panReactView.alpha=0;
             }];
             for (TmrView * view in self.cardView.subviews) {
                 if (![view isEqual:self.panReactView]) {

@@ -73,18 +73,19 @@ float TmrListAnimationDuration=0.3;
 }
 
 -(void)pan:(UIPanGestureRecognizer *)pan{
-    NSLog(@"%@",pan.view);
     NSInteger removeJudge=0;
-    CGPoint transP = [pan translationInView:pan.view];
+    CGFloat trans = [pan translationInView:pan.view].x;
     CGRect f=pan.view.frame;
-    f.origin.x+=transP.x;
-    if (f.origin.x>self.originX) {
-        f.origin.x=self.originX;
-    }
+    f.origin.x+=trans;
     pan.view.frame=f;
-    if(pan.state == UIGestureRecognizerStateEnded){
-        if (f.origin.x+f.size.width/2<[UIScreen mainScreen].bounds.size.width*1/3) {
+    if(pan.state == UIGestureRecognizerStateEnded||pan.state==UIGestureRecognizerStateCancelled){
+        NSLog(@"%f",trans);
+        if (pan.view.frame.origin.x<0) {
             f.origin.x=-OUTSIDE.width;
+            removeJudge=1;
+        }
+        else if (pan.view.frame.origin.x+pan.view.frame.size.width>[UIScreen mainScreen].bounds.size.width){
+            f.origin.x=OUTSIDE.width;
             removeJudge=1;
         }
         else{
@@ -102,10 +103,10 @@ float TmrListAnimationDuration=0.3;
 
 -(void)removeCellAndReArrange:(TmrCell *)cell{
     CGRect frame=cell.frame;
-    frame.origin.x=-OUTSIDE.width;
-    [UIView animateWithDuration:TmrListAnimationDuration animations:^{
-        cell.frame=frame;
-    }];
+//    frame.origin.x=-OUTSIDE.width;
+//    [UIView animateWithDuration:TmrListAnimationDuration animations:^{
+//        cell.frame=frame;
+//    }];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [cell removeFromSuperview];
         [self.cellArr removeObject:cell];
