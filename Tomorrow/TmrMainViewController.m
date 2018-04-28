@@ -6,9 +6,9 @@
 //  Copyright © 2017年 李嘉银. All rights reserved.
 //
 #define OUTSIDE [UIScreen mainScreen].bounds.size
-#import "ViewController.h"
+#import "TmrMainViewController.h"
 
-@interface ViewController ()
+@interface TmrMainViewController ()
 @property(strong,nonatomic)NSMutableArray<TmrThing *> * todayThingArr;
 @property(strong,nonatomic)NSMutableArray<TmrThing *> * tomorrowThingArr;
 @property(strong,nonatomic)MenuView * menu;
@@ -22,7 +22,9 @@
 @property NSInteger originY;
 @end
 
-@implementation ViewController
+@implementation TmrMainViewController
+
+float TmrAnimationDuration=0.3;
 
 -(NSMutableArray *)todayThingArr{
     if (_todayThingArr==nil) {
@@ -65,9 +67,9 @@
 }
 
 -(void)setViewWithArr{
-    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4* NSEC_PER_SEC));
+    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TmrAnimationDuration* NSEC_PER_SEC));
     for (TmrView * view in self.cardView.subviews) {
-        [UIView animateWithDuration:0.4 animations:^{
+        [UIView animateWithDuration:TmrAnimationDuration animations:^{
             CGRect frame=view.frame;
             frame.origin.y=-OUTSIDE.height;
             view.frame=frame;
@@ -97,7 +99,7 @@
             CGRect frame=view.frame;
             frame.origin.y=-OUTSIDE.height;
             view.frame=frame;
-            [UIView animateWithDuration:0.4 animations:^{
+            [UIView animateWithDuration:TmrAnimationDuration animations:^{
                 CGRect frame=view.frame;
                 frame.origin.y=self.originY;
                 view.frame=frame;
@@ -123,11 +125,11 @@
         else{
             f.origin.y=self.originY;
         }
-        [UIView animateWithDuration:0.4 animations:^{
+        [UIView animateWithDuration:TmrAnimationDuration animations:^{
             self.panReactView.frame=f;
         }];
         if (removeJudge==1) {
-            [self performSelector:@selector(didRemoveFirstCard) withObject:nil afterDelay:0.4];
+            [self performSelector:@selector(didRemoveFirstCard) withObject:nil afterDelay:TmrAnimationDuration];
         }
     }
     [pan setTranslation:CGPointZero inView:self.panReactView];
@@ -137,7 +139,7 @@
     [self.todayThingArr removeObjectAtIndex:0];
     [self.panReactView removeFromSuperview];
     for (TmrView * view in self.cardView.subviews) {
-        [UIView animateWithDuration:0.4 animations:^{
+        [UIView animateWithDuration:TmrAnimationDuration animations:^{
             CGRect frame=view.frame;
             frame.origin.x-=10;
             view.frame=frame;
@@ -172,9 +174,9 @@
 }
 
 - (IBAction)addTodayThing:(id)sender {
-    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4* NSEC_PER_SEC));
+    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TmrAnimationDuration* NSEC_PER_SEC));
     for (TmrView * view in self.cardView.subviews) {
-        [UIView animateWithDuration:0.4 animations:^{
+        [UIView animateWithDuration:TmrAnimationDuration animations:^{
             CGRect frame=view.frame;
             frame.origin.x+=10;
             view.frame=frame;
@@ -192,7 +194,7 @@
         center.y=-OUTSIDE.height;
         view.center=center;
         center.y=self.originY+view.frame.size.height/2;
-        [UIView animateWithDuration:0.4 animations:^{
+        [UIView animateWithDuration:TmrAnimationDuration animations:^{
             view.center=center;
         }];
         dispatch_after(delayTime, dispatch_get_main_queue(), ^{
@@ -213,7 +215,7 @@
                 else{
                     CGRect frame=view.frame;
                     frame.origin.y=-OUTSIDE.height;
-                    [UIView animateWithDuration:0.4 animations:^{
+                    [UIView animateWithDuration:TmrAnimationDuration animations:^{
                         view.frame=frame;
                     }];
                     [self performSelector:@selector(didRemoveFirstCard) withObject:nil afterDelay:0.5];

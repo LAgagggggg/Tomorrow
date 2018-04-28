@@ -13,9 +13,12 @@
 @property(strong,nonatomic)NSMutableArray<TmrThing *> * thingArr;
 @property(strong,nonatomic)NSMutableArray<TmrCell *> * cellArr;
 @property CGFloat currentY;
+@property CGFloat originX;
 @end
 
 @implementation TomorrowListViewController
+
+float TmrAnimationDuration=0.3;
 
 -(NSMutableArray *)cellArr{
     if (_cellArr==nil) {
@@ -63,6 +66,7 @@
         [UIView animateWithDuration:0.8 animations:^{
             cell.center=center;
         }];
+        self.originX=cell.frame.origin.x;
     }
 //    self.navigationItem.hidesBackButton=YES;
     return self;
@@ -70,30 +74,51 @@
 
 -(void)pan:(UIPanGestureRecognizer *)pan{
     NSLog(@"%@",pan.view);
-//    NSInteger removeJudge=0;
-//    CGPoint transP = [pan translationInView:self.panReactView];
-//    CGRect f=self.panReactView.frame;
-//    f.origin.y+=transP.y;
-//    if (f.origin.y>self.originY) {
-//        f.origin.y=self.originY;
-//    }
-//    self.panReactView.frame=f;
-//    if(pan.state == UIGestureRecognizerStateEnded){
-//        if (f.origin.y<-[UIScreen mainScreen].bounds.size.height*1/3) {
-//            f.origin.y=-OUTSIDE.height;
-//            removeJudge=1;
-//        }
-//        else{
-//            f.origin.y=self.originY;
-//        }
-//        [UIView animateWithDuration:0.4 animations:^{
-//            self.panReactView.frame=f;
-//        }];
-//        if (removeJudge==1) {
-//            [self performSelector:@selector(didRemoveFirstCard) withObject:nil afterDelay:0.4];
-//        }
-//    }
-//    [pan setTranslation:CGPointZero inView:self.panReactView];
+    NSInteger removeJudge=0;
+    CGPoint transP = [pan translationInView:pan.view];
+    CGRect f=pan.view.frame;
+    f.origin.x+=transP.x;
+    if (f.origin.x>self.originX) {
+        f.origin.x=self.originX;
+    }
+    pan.view.frame=f;
+    if(pan.state == UIGestureRecognizerStateEnded){
+        if (f.origin.x+f.size.width/2<[UIScreen mainScreen].bounds.size.width*1/3) {
+            f.origin.x=-OUTSIDE.width;
+            removeJudge=1;
+        }
+        else{
+            f.origin.x=self.originX;
+        }
+        [UIView animateWithDuration:TmrAnimationDuration animations:^{
+            pan.view.frame=f;
+        }];
+        if (removeJudge==1) {
+            [self performSelector:@selector(removeCellAndReArrange:) withObject:pan.view afterDelay:TmrAnimationDuration];
+        }
+    }
+    [pan setTranslation:CGPointZero inView:pan.view ];
+}
+
+-(void)removeCellAndReArrange:(TmrCell *)cell{
+    CGRect frame=cell.frame;
+    frame.origin.x=-OUTSIDE.width;
+    [UIView animateWithDuration:TmrAnimationDuration animations:^{
+        cell.frame=frame;
+    }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [cell removeFromSuperview];
+        [self.cellArr removeObject:cell];
+    });
+    NSInteger index=[self.cellArr indexOfObject:cell];
+    for (NSInteger i=index; i<self.cellArr.count; i++) {
+        frame=self.cellArr[i].frame;
+        frame.origin.y-=self.cellArr[i].frame.size.height;
+        [UIView animateWithDuration:TmrAnimationDuration animations:^{
+            self.cellArr[i].frame=frame;
+        }];
+        
+    }
 }
 
 -(void)AddTomorrowThing{
@@ -105,7 +130,7 @@
     CGPoint center=CGPointMake(-400, self.currentY);
     cell.center=center;
     center.x=self.view.center.x;
-    [UIView animateWithDuration:0.4 animations:^{
+    [UIView animateWithDuration:TmrAnimationDuration animations:^{
         cell.center=center;
     }];
     [self.cellArr addObject:cell];
@@ -130,12 +155,12 @@
             if (cell.title.text.length==0) {
                 CGRect frame=cell.frame;
                 frame.origin.x=-OUTSIDE.width;
-                [UIView animateWithDuration:0.4 animations:^{
+                [UIView animateWithDuration:TmrAnimationDuration animations:^{
                     cell.frame=frame;
                 }];
                 [self.cellArr removeObject:cell];
                 [cell performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:
-                     0.4];
+                     TmrAnimationDuration];
             }
         }
     }

@@ -13,7 +13,7 @@
 #import "MenuView.h"
 #import "TomorrowListViewController.h"
 
-@interface ViewController : UIViewController<UITextViewDelegate,UIGestureRecognizerDelegate>
+@interface TmrMainViewController : UIViewController<UITextViewDelegate,UIGestureRecognizerDelegate>
 
 @property(strong,nonatomic)AppDelegate *appDelegate;
 
