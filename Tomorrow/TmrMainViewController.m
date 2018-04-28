@@ -19,14 +19,15 @@
 @property (weak, nonatomic) IBOutlet UIButton *todayAddButton;
 @property (weak, nonatomic) IBOutlet UIButton *tomorrowAddButton;
 @property (weak, nonatomic) IBOutlet UIButton *randomButton;
+
 @property NSInteger originY;
 @end
 
 @implementation TmrMainViewController
 
 float TmrAnimationDuration=0.3;
-
--(NSMutableArray *)todayThingArr{
+float TmrMaxSwipeLength;
+-(NSMutableArray *)todayThingArr{//懒加载今日事项数组
     if (_todayThingArr==nil) {
         NSString* documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         self.archiverPath=[documentPath stringByAppendingPathComponent:@"Tomorrow.data"];
@@ -34,7 +35,7 @@ float TmrAnimationDuration=0.3;
         if([fileManager fileExistsAtPath:self.archiverPath]){
             _todayThingArr=[NSKeyedUnarchiver unarchiveObjectWithFile:self.archiverPath];
         }
-        else{
+        else{//若第一次进入则创建示例
             _todayThingArr=[[NSMutableArray alloc]init];
             NSInteger i;
             for (i=0; i<11; i++) {
@@ -46,7 +47,7 @@ float TmrAnimationDuration=0.3;
     return  _todayThingArr;
 }
 
--(NSMutableArray *)tomorrowThingArr{
+-(NSMutableArray *)tomorrowThingArr{//明日事项数组
     if (_tomorrowThingArr==nil) {
         NSString* documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         self.archiverPathOfTomorrow=[documentPath stringByAppendingPathComponent:@"Tomorrow2.data"];
@@ -67,6 +68,8 @@ float TmrAnimationDuration=0.3;
 }
 
 -(void)setViewWithArr{
+    TmrMaxSwipeLength=[UIScreen mainScreen].bounds.size.width/2;
+    self.originY=self.cardView.center.y-64;
     dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TmrAnimationDuration* NSEC_PER_SEC));
     for (TmrView * view in self.cardView.subviews) {
         [UIView animateWithDuration:TmrAnimationDuration animations:^{
@@ -92,50 +95,94 @@ float TmrAnimationDuration=0.3;
                 self.panReactView=view;
                 UIPanGestureRecognizer * pan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan:)];
                 [self.panReactView addGestureRecognizer:pan];
-                self.originY=self.cardView.center.y-self.panReactView.frame.size.height/2-64;
             }
         }
         for (TmrView * view in self.cardView.subviews) {
-            CGRect frame=view.frame;
-            frame.origin.y=-OUTSIDE.height;
-            view.frame=frame;
+            CGPoint center=view.center;
+            center.y=-OUTSIDE.height;
+            view.center=center;
             [UIView animateWithDuration:TmrAnimationDuration animations:^{
-                CGRect frame=view.frame;
-                frame.origin.y=self.originY;
-                view.frame=frame;
+                CGPoint center=view.center;
+                center.y=self.originY;
+                view.center=center;
+                
             }];
         }
     });
 }
 
--(void)pan:(UIPanGestureRecognizer *)pan{
-    NSInteger removeJudge=0;
-    CGPoint transP = [pan translationInView:self.panReactView];
-    CGRect f=self.panReactView.frame;
-    f.origin.y+=transP.y;
-    if (f.origin.y>self.originY) {
-        f.origin.y=self.originY;
+//-(void)pan:(UIPanGestureRecognizer *)pan{
+//    NSInteger removeJudge=0;
+//    CGPoint transP = [pan translationInView:self.panReactView];
+//    CGPoint center=self.panReactView.center;
+//    center.y+=transP.y;
+//    if (center.y>self.originY) {
+//        center.y=self.originY;
+//    }
+//    self.panReactView.center=center;
+//    if(pan.state == UIGestureRecognizerStateEnded){
+//        if (center.y<0) {
+//            center.y=-OUTSIDE.height;
+//            removeJudge=1;
+//        }
+//        else{
+//            center.y=self.originY;
+//        }
+//        [UIView animateWithDuration:TmrAnimationDuration animations:^{
+//            self.panReactView.center=center;
+//        }];
+//        if (removeJudge==1) {
+//            [self performSelector:@selector(didRemoveFirstCard) withObject:nil afterDelay:TmrAnimationDuration];
+//        }
+//    }
+//    [pan setTranslation:CGPointZero inView:self.panReactView];
+//}
+
+-(void)pan:(UIPanGestureRecognizer *)pan{//拖动时的动画效果
+    float trans = [pan translationInView:self.panReactView].x;
+    float delta = trans * 0.6;
+    NSInteger count=self.cardView.subviews.count;
+    if (pan.state==UIGestureRecognizerStateChanged) {
+        for (TmrView * view in self.cardView.subviews) {
+            NSInteger index=self.cardView.subviews.count-[self.cardView.subviews indexOfObject:view]-1;
+            view.layer.transform=CATransform3DIdentity;
+            view.layer.transform=CATransform3DTranslate(view.layer.transform, delta*(1 - (float)index/count), 0, 0);
+            view.layer.transform=CATransform3DRotate(view.layer.transform, (1 - (float)index / (float)count) * (delta / TmrMaxSwipeLength) * (15.0 / 180) * M_PI, 0, 0, 1);
+        }
     }
-    self.panReactView.frame=f;
-    if(pan.state == UIGestureRecognizerStateEnded){
-        if (f.origin.y<-[UIScreen mainScreen].bounds.size.height*1/3) {
-            f.origin.y=-OUTSIDE.height;
-            removeJudge=1;
+    else if(pan.state==UIGestureRecognizerStateEnded || pan.state==UIGestureRecognizerStateCancelled){
+        if (fabsf(trans)>self.panReactView.bounds.size.width/2){//移除第一张卡片
+            [UIView animateWithDuration:TmrAnimationDuration animations:^{
+                if (trans>=0) {//向右移除
+                    self.panReactView.layer.transform=CATransform3DTranslate(self.panReactView.layer.transform, [UIScreen mainScreen].bounds.size.width, 0, 0);
+                    self.panReactView.layer.transform=CATransform3DRotate(self.panReactView.layer.transform, M_PI/6, 0, 0, 1);
+                }
+                else{//向左
+                    self.panReactView.layer.transform=CATransform3DTranslate(self.panReactView.layer.transform, -[UIScreen mainScreen].bounds.size.width, 0, 0);
+                    self.panReactView.layer.transform=CATransform3DRotate(self.panReactView.layer.transform, M_PI/6, 0, 0, -1);
+                }
+                self.panReactView.alpha=0.5;
+            }];
+            for (TmrView * view in self.cardView.subviews) {
+                if (![view isEqual:self.panReactView]) {
+                    view.layer.transform=CATransform3DIdentity;
+                }
+            }
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TmrAnimationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self didRemoveFirstCard];
+            });
         }
         else{
-            f.origin.y=self.originY;
-        }
-        [UIView animateWithDuration:TmrAnimationDuration animations:^{
-            self.panReactView.frame=f;
-        }];
-        if (removeJudge==1) {
-            [self performSelector:@selector(didRemoveFirstCard) withObject:nil afterDelay:TmrAnimationDuration];
-        }
+            [UIView animateWithDuration:TmrAnimationDuration delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
+            for (TmrView * view in self.cardView.subviews) {
+                view.layer.transform=CATransform3DIdentity;
+            }
+        } completion:nil];}
     }
-    [pan setTranslation:CGPointZero inView:self.panReactView];
 }
 
--(void)didRemoveFirstCard{
+
+-(void)didRemoveFirstCard{//将第一张卡片移出画面后要做的事
     [self.todayThingArr removeObjectAtIndex:0];
     [self.panReactView removeFromSuperview];
     for (TmrView * view in self.cardView.subviews) {
@@ -193,7 +240,7 @@ float TmrAnimationDuration=0.3;
         CGPoint center=self.cardView.center;
         center.y=-OUTSIDE.height;
         view.center=center;
-        center.y=self.originY+view.frame.size.height/2;
+        center.y=self.originY;
         [UIView animateWithDuration:TmrAnimationDuration animations:^{
             view.center=center;
         }];
@@ -242,11 +289,11 @@ float TmrAnimationDuration=0.3;
 }
 
 - (IBAction)editTomorrowThing:(id)sender {
-    TomorrowListViewController * tomorrow=[[TomorrowListViewController alloc]initWithArr:self.tomorrowThingArr];
-    tomorrow.returnArr = ^(NSMutableArray * arr) {
+    TomorrowListViewController * tomorrowVC=[[TomorrowListViewController alloc]initWithArr:self.tomorrowThingArr];
+    tomorrowVC.returnArr = ^(NSMutableArray * arr) {
         self.tomorrowThingArr=arr;
     };
-    [self.navigationController pushViewController:tomorrow animated:YES];
+    [self.navigationController pushViewController:tomorrowVC animated:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

@@ -10,7 +10,7 @@
 #import "TmrCell.h"
 #import "TmrThing.h"
 
-@interface TomorrowListViewController : UIViewController<UIGestureRecognizerDelegate,UINavigationControllerDelegate>
+@interface TomorrowListViewController : UIViewController<UIGestureRecognizerDelegate,UINavigationControllerDelegate,UIScrollViewDelegate>
 
 @property(strong,nonatomic)void(^returnArr)(NSMutableArray * arr);
 

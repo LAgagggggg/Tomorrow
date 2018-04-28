@@ -40,7 +40,7 @@
                                     <constraint firstAttribute="height" constant="50" id="EPm-Oo-hpu"/>
                                     <constraint firstAttribute="width" constant="50" id="vhH-ZF-VbM"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="refresh.png"/>
+                                <state key="normal" title="Button" image="refresh"/>
                                 <connections>
                                     <action selector="random:" destination="Ocr-SQ-qqK" eventType="touchUpInside" id="HtC-Fc-Q2G"/>
                                 </connections>
@@ -51,7 +51,7 @@
                                     <constraint firstAttribute="width" constant="50" id="ISM-P9-76B"/>
                                     <constraint firstAttribute="height" constant="50" id="gAU-Qf-l8q"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="addition.png"/>
+                                <state key="normal" title="Button" image="addition"/>
                                 <connections>
                                     <action selector="addTodayThing:" destination="Ocr-SQ-qqK" eventType="touchUpInside" id="PjS-hi-p1R"/>
                                 </connections>
@@ -62,7 +62,7 @@
                                     <constraint firstAttribute="width" constant="50" id="9zr-ag-InJ"/>
                                     <constraint firstAttribute="height" constant="50" id="Vvw-kO-VeK"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="editor.png"/>
+                                <state key="normal" title="Button" image="editor"/>
                                 <connections>
                                     <action selector="editTomorrowThing:" destination="Ocr-SQ-qqK" eventType="touchUpInside" id="NVh-eK-5Z7"/>
                                 </connections>
@@ -133,8 +133,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="addition" width="200" height="200"/>
         <image name="addition.png" width="200" height="200"/>
-        <image name="editor.png" width="200" height="200"/>
-        <image name="refresh.png" width="200" height="200"/>
+        <image name="editor" width="200" height="200"/>
+        <image name="refresh" width="200" height="200"/>
     </resources>
 </document>

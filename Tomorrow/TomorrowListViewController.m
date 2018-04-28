@@ -18,7 +18,7 @@
 
 @implementation TomorrowListViewController
 
-float TmrAnimationDuration=0.3;
+float TmrListAnimationDuration=0.3;
 
 -(NSMutableArray *)cellArr{
     if (_cellArr==nil) {
@@ -90,11 +90,11 @@ float TmrAnimationDuration=0.3;
         else{
             f.origin.x=self.originX;
         }
-        [UIView animateWithDuration:TmrAnimationDuration animations:^{
+        [UIView animateWithDuration:TmrListAnimationDuration animations:^{
             pan.view.frame=f;
         }];
         if (removeJudge==1) {
-            [self performSelector:@selector(removeCellAndReArrange:) withObject:pan.view afterDelay:TmrAnimationDuration];
+            [self performSelector:@selector(removeCellAndReArrange:) withObject:pan.view afterDelay:TmrListAnimationDuration];
         }
     }
     [pan setTranslation:CGPointZero inView:pan.view ];
@@ -103,7 +103,7 @@ float TmrAnimationDuration=0.3;
 -(void)removeCellAndReArrange:(TmrCell *)cell{
     CGRect frame=cell.frame;
     frame.origin.x=-OUTSIDE.width;
-    [UIView animateWithDuration:TmrAnimationDuration animations:^{
+    [UIView animateWithDuration:TmrListAnimationDuration animations:^{
         cell.frame=frame;
     }];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -114,7 +114,7 @@ float TmrAnimationDuration=0.3;
     for (NSInteger i=index; i<self.cellArr.count; i++) {
         frame=self.cellArr[i].frame;
         frame.origin.y-=self.cellArr[i].frame.size.height;
-        [UIView animateWithDuration:TmrAnimationDuration animations:^{
+        [UIView animateWithDuration:TmrListAnimationDuration animations:^{
             self.cellArr[i].frame=frame;
         }];
         
@@ -130,7 +130,7 @@ float TmrAnimationDuration=0.3;
     CGPoint center=CGPointMake(-400, self.currentY);
     cell.center=center;
     center.x=self.view.center.x;
-    [UIView animateWithDuration:TmrAnimationDuration animations:^{
+    [UIView animateWithDuration:TmrListAnimationDuration animations:^{
         cell.center=center;
     }];
     [self.cellArr addObject:cell];
@@ -155,12 +155,12 @@ float TmrAnimationDuration=0.3;
             if (cell.title.text.length==0) {
                 CGRect frame=cell.frame;
                 frame.origin.x=-OUTSIDE.width;
-                [UIView animateWithDuration:TmrAnimationDuration animations:^{
+                [UIView animateWithDuration:TmrListAnimationDuration animations:^{
                     cell.frame=frame;
                 }];
                 [self.cellArr removeObject:cell];
                 [cell performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:
-                     TmrAnimationDuration];
+                     TmrListAnimationDuration];
             }
         }
     }
