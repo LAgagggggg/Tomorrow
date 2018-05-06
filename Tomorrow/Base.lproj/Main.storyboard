@@ -92,7 +92,7 @@
                         <outlet property="cardView" destination="z5Q-dy-pI0" id="7gF-MR-Lvo"/>
                         <outlet property="randomButton" destination="1Wn-cl-jWw" id="F1c-Xx-lK2"/>
                         <outlet property="todayAddButton" destination="aL1-Rh-WCF" id="qvq-se-5Cw"/>
-                        <outlet property="tomorrowAddButton" destination="1Wn-cl-jWw" id="rbE-HF-rFg"/>
+                        <outlet property="tomorrowAddButton" destination="AVZ-mA-LBm" id="A0v-kg-EUV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dWi-5e-YEe" userLabel="First Responder" sceneMemberID="firstResponder"/>

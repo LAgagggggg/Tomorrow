@@ -16,6 +16,7 @@
 @interface TmrMainViewController : UIViewController<UITextViewDelegate,UIGestureRecognizerDelegate>
 
 @property(strong,nonatomic)AppDelegate *appDelegate;
+@property (weak, nonatomic) IBOutlet UIButton *tomorrowAddButton;
 
 @end
 

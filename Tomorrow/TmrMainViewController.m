@@ -17,7 +17,6 @@
 @property(strong,nonatomic) NSString * archiverPathOfTomorrow;
 @property(strong,nonatomic) UIView * panReactView;
 @property (weak, nonatomic) IBOutlet UIButton *todayAddButton;
-@property (weak, nonatomic) IBOutlet UIButton *tomorrowAddButton;
 @property (weak, nonatomic) IBOutlet UIButton *randomButton;
 
 @property NSInteger originY;
@@ -69,22 +68,20 @@ float TmrMaxSwipeLength;
     return  _tomorrowThingArr;
 }
 
--(void)setViewWithArr{
+-(void)resetViewWithArr{
     [self checkDateToSwitchArr];
     TmrMaxSwipeLength=[UIScreen mainScreen].bounds.size.width/2;
     self.originY=self.cardView.center.y-64;
-    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TmrAnimationDuration* NSEC_PER_SEC));
     for (TmrView * view in self.cardView.subviews) {
         [UIView animateWithDuration:TmrAnimationDuration animations:^{
             CGRect frame=view.frame;
             frame.origin.y=-OUTSIDE.height;
             view.frame=frame;
-        }];
-        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+        } completion:^(BOOL finished) {
             [view removeFromSuperview];
-        });
+        }];
     }
-    dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TmrAnimationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         CGRect frame=self.cardView.frame;
         frame.origin.x=0;
         self.cardView.frame=frame;
@@ -108,7 +105,6 @@ float TmrMaxSwipeLength;
                 CGPoint center=view.center;
                 center.y=self.originY;
                 view.center=center;
-                
             }];
         }
     });
@@ -147,33 +143,6 @@ float TmrMaxSwipeLength;
     }
 }
 
-//-(void)pan:(UIPanGestureRecognizer *)pan{
-//    NSInteger removeJudge=0;
-//    CGPoint transP = [pan translationInView:self.panReactView];
-//    CGPoint center=self.panReactView.center;
-//    center.y+=transP.y;
-//    if (center.y>self.originY) {
-//        center.y=self.originY;
-//    }
-//    self.panReactView.center=center;
-//    if(pan.state == UIGestureRecognizerStateEnded){
-//        if (center.y<0) {
-//            center.y=-OUTSIDE.height;
-//            removeJudge=1;
-//        }
-//        else{
-//            center.y=self.originY;
-//        }
-//        [UIView animateWithDuration:TmrAnimationDuration animations:^{
-//            self.panReactView.center=center;
-//        }];
-//        if (removeJudge==1) {
-//            [self performSelector:@selector(didRemoveFirstCard) withObject:nil afterDelay:TmrAnimationDuration];
-//        }
-//    }
-//    [pan setTranslation:CGPointZero inView:self.panReactView];
-//}
-
 -(void)pan:(UIPanGestureRecognizer *)pan{//拖动时的动画效果
     float trans = [pan translationInView:self.panReactView].x;
     float delta = trans * 0.6;
@@ -198,15 +167,14 @@ float TmrMaxSwipeLength;
                     self.panReactView.layer.transform=CATransform3DRotate(self.panReactView.layer.transform, M_PI/6, 0, 0, -1);
                 }
                 self.panReactView.alpha=0;
+            } completion:^(BOOL finished) {
+                [self didRemoveFirstCard];
             }];
             for (TmrView * view in self.cardView.subviews) {
                 if (![view isEqual:self.panReactView]) {
                     view.layer.transform=CATransform3DIdentity;
                 }
             }
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TmrAnimationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self didRemoveFirstCard];
-            });
         }
         else{
             [UIView animateWithDuration:TmrAnimationDuration delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
@@ -239,7 +207,7 @@ float TmrMaxSwipeLength;
 }
 
 - (IBAction)random:(id)sender {
-    int random = arc4random() % 2;
+    int random;
     NSMutableArray * randomArr=[[NSMutableArray alloc]init];
     for (TmrThing * thing in self.todayThingArr) {
         random = arc4random() % 2;
@@ -251,7 +219,7 @@ float TmrMaxSwipeLength;
         }
     }
     self.todayThingArr=randomArr;
-    [self setViewWithArr];
+    [self resetViewWithArr];
     [self saveData];
     
 }
@@ -279,10 +247,9 @@ float TmrMaxSwipeLength;
         center.y=self.originY;
         [UIView animateWithDuration:TmrAnimationDuration animations:^{
             view.center=center;
-        }];
-        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+        } completion:^(BOOL finished) {
             [view.title becomeFirstResponder];
-        });
+        }];
     });
 }
 
@@ -300,8 +267,9 @@ float TmrMaxSwipeLength;
                     frame.origin.y=-OUTSIDE.height;
                     [UIView animateWithDuration:TmrAnimationDuration animations:^{
                         view.frame=frame;
+                    } completion:^(BOOL finished) {
+                        [self didRemoveFirstCard];
                     }];
-                    [self performSelector:@selector(didRemoveFirstCard) withObject:nil afterDelay:0.5];
                 }
             }
         }
@@ -333,6 +301,7 @@ float TmrMaxSwipeLength;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     self.view.backgroundColor=[UIColor whiteColor];
@@ -357,7 +326,7 @@ float TmrMaxSwipeLength;
             weakMenu.view.alpha=value;
         }];
     };
-    [self setViewWithArr];
+    [self resetViewWithArr];
     UIButton * setButton=[[UIButton alloc]initWithFrame:CGRectMake(10,20, 50, 50)];
     [setButton setImage:[UIImage imageNamed:@"setup"] forState:0];
     [setButton addTarget:self action:@selector(CallMenu) forControlEvents:UIControlEventTouchUpInside];

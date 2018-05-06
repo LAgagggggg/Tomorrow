@@ -7,7 +7,7 @@
 //
 
 #import "MenuView.h"
-
+#define WIDTH ([UIScreen mainScreen].currentMode.size.width/3)
 @implementation MenuView
 
 -(instancetype)init{
@@ -29,7 +29,7 @@
     if (f.origin.x>0) {
         f.origin.x=0;
     }
-    float ratio=self.frame.origin.x;
+    float ratio;
     self.frame=f;
     if(pan.state == UIGestureRecognizerStateEnded){
         if ((f.origin.x+WIDTH)<100) {

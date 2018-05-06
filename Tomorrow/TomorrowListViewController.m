@@ -102,7 +102,7 @@ float TmrListAnimationDuration=0.3;
 }
 
 -(void)removeCellAndReArrange:(TmrCell *)cell{
-    CGRect frame=cell.frame;
+    CGRect frame;
 //    frame.origin.x=-OUTSIDE.width;
 //    [UIView animateWithDuration:TmrListAnimationDuration animations:^{
 //        cell.frame=frame;
@@ -187,6 +187,11 @@ float TmrListAnimationDuration=0.3;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
 }
 
 - (void)didReceiveMemoryWarning {
